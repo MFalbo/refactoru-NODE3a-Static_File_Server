@@ -3,11 +3,12 @@ var app = express();
 
 var fs = require('fs');
 
-var fileContents = fs.readFileSync('data.txt', 'utf-8');
 
-app.get('/', function(req, res) {
-	res.header('Content-Type', 'text/html')
-	res.send(fileContents);
+app.get('/public/:filename', function(req, res) {
+	fs.readFile("./public/" + req.params.filename, function(err, data){
+		res.header('Content-Type', 'text/html')
+		res.send(data);
+	});
 });
 
 var server = app.listen(6670, function() {
